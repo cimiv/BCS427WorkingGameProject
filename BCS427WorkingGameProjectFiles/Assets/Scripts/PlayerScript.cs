@@ -8,6 +8,9 @@ public class PlayerScript : MonoBehaviour
 	public float gravity = -0.8f;
 	CharacterController controller;
 	public GameObject player;
+	private Vector3 vel;
+	private int jumpNum = 60;
+	public bool isJump = false;
 	
     // Start is called before the first frame update
     void Start()
@@ -26,11 +29,17 @@ public class PlayerScript : MonoBehaviour
 		
 		controller.Move(mov);
 		
-		if(Input.GetKeyDown("space"))
+		if(Input.GetKeyDown("space") && isJump == false)
 		{
-			Vector3 moveY = Vector3.up * 2;
-			controller.Move(moveY);
+			isJump = true;
+			vel.y += Mathf.Sqrt(jumpNum * -1 * gravity);
+		}
+		if(controller.isGrounded == true)
+		{
+			isJump = false;
 		}
 		
+		vel.y += gravity * Time.deltaTime;
+		controller.Move(vel * Time.deltaTime);
     }
 }

@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
 	public GameObject losetext;
 	public GameObject wintext;
 	public GameObject player;
-	public bool winCondition = false;
 
     private void Awake()
     {
@@ -37,8 +36,10 @@ public class GameManager : MonoBehaviour
             case GameState.Playing:
                 break;
             case GameState.GameOver:
+                LoseLvl();
                 break;
             case GameState.WinLevel:
+                WinLvl();
                 break;
         }
 
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameState = GameState.Idle;
+        UpdateGameState(GameState.Playing);
         if (Instance == this)
         {
             DontDestroyOnLoad(this);
@@ -60,18 +61,25 @@ public class GameManager : MonoBehaviour
     {
         healthbar.SetText("Health: " + playerHealth);
 		
-		if(playerHealth == 0)
+		if(playerHealth <= 0)
 		{
-			losetext.SetActive(true);
-			player.SetActive(false);
+            UpdateGameState(GameState.GameOver);
 		}
 		
-		if(winCondition == true)
-		{
-			wintext.SetActive(true);
-			player.SetActive(false);
-		}
     }
+
+    private void WinLvl()
+    {
+        wintext.SetActive(true);
+        player.SetActive(false);
+    }
+
+    private void LoseLvl()
+    {
+        losetext.SetActive(true);
+        player.SetActive(false);
+    }
+
 }
 
 public enum GameState

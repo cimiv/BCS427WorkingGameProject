@@ -41,7 +41,7 @@ public class EnemyController : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, target.position);
 
-        if (dist > minDist && state == GameState.Playing)
+        if (dist > minDist /*&& state == GameState.Playing*/) // Currently an issue updating the game state of the enemy on game start, uncomment this check to investigate.
         {
             transform.position += transform.forward * speed * Time.deltaTime;
         }

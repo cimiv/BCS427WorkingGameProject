@@ -20,7 +20,7 @@ public class WinScript : MonoBehaviour
     {
 		if(other.gameObject.CompareTag("Player"))
 		{
-			GameManager.Instance.winCondition = true;
+            GameManager.Instance.UpdateGameState(GameState.WinLevel);
 		}
     }
 }

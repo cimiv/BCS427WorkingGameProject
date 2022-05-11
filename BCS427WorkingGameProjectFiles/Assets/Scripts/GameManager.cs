@@ -15,19 +15,30 @@ public class GameManager : MonoBehaviour
 	public GameObject wintext;
 	public GameObject player;
 	public bool winCondition = false;
-	
-	private void Awake()
+
+    private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
-	
-	public void UpdateGameState(GameState newState)
+
+    public void UpdateGameState(GameState newState)
     {
+        gameState = newState;
         switch (newState)
         {
+            case GameState.Idle:
+                break;
             case GameState.Playing:
                 break;
             case GameState.GameOver:
+                break;
+            case GameState.WinLevel:
                 break;
         }
 
@@ -37,7 +48,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameState = GameState.Idle;
+        if (Instance == this)
+        {
+            DontDestroyOnLoad(this);
+        }
     }
 
     // Update is called once per frame
@@ -61,6 +76,8 @@ public class GameManager : MonoBehaviour
 
 public enum GameState
 {
+    Idle,
     Playing,
-	GameOver
+	GameOver,
+    WinLevel
 }

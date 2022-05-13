@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 	public GameObject wintext;
 	public GameObject player;
 
+
     private void Awake()
     {
         if (Instance == null)
@@ -72,12 +73,14 @@ public class GameManager : MonoBehaviour
     {
         wintext.SetActive(true);
         player.SetActive(false);
+        SwapCamera.Instance.swapCamera(1);
     }
 
     private void LoseLvl()
     {
         losetext.SetActive(true);
         player.SetActive(false);
+        SwapCamera.Instance.swapCamera(1);
     }
 
 }
